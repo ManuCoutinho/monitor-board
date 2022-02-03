@@ -17,7 +17,7 @@ export function Profile({ showProfileData = true }: ProfileProps) {
               joaninha@email.com
           </Text>
         </Box>
-     )};
+     )}
      <Avatar
        size="md"
        name="Joaninha Flores" 

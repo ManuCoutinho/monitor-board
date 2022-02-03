@@ -54,9 +54,13 @@ const options = {
   }  
 }
 
-const series = [
+const seriesUsers = [
   { name: '2022', data:[31, 251, 32,  125, 24, 55]},
   { name: '2021', data:[63, 180, 224,  89, 99, 151]}
+]
+const seriesTax = [
+  { name: '2022', data:[60, 110, 20,  12, 55, 77]},
+  { name: '2021', data:[80, 199, 124,  189, 99, 144]}
 ]
 
 export default function Dashboard() {
@@ -67,19 +71,20 @@ export default function Dashboard() {
         <Sidebar/>
         <SimpleGrid flex="1" gap="4" minChildWidth="320px" align="flex-start">
           <Box
-            p="8"
+            p={["6", "8"]}
             bg="gray.800"
             borderRadius={8}            
           >
             <Text fontSize="lg" mb="4">Inscritos da Semana</Text>
-            <Chart type="area" height={168} options={options} series={series} />
+            <Chart type="area" height={168} options={options} series={seriesUsers} />
           </Box>
           <Box
-            p="8"
+            p={["6", "8"]}
             bg="gray.800"
             borderRadius={8}            
           >
             <Text fontSize="lg" mb="4">Taxa de abertura</Text>
+            <Chart type="area" height={168} options={options} series={seriesTax} />
           </Box>
         </SimpleGrid>
       </Flex>
