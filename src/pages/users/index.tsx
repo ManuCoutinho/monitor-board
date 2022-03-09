@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { useQuery } from "react-query";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
-import { api } from "../../services/api";
+import { useUsers } from "../../services/hooks/useUsers";
 import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
@@ -22,27 +21,11 @@ import {
   Tr,
   useBreakpointValue,
 } from "@chakra-ui/react";
+import { useState } from "react";
 
 export default function UserList() {
-  const { data, isLoading, isFetching, error } = useQuery(
-    "users",
-    async () => {
-      const { data } = await api.get("users");
-
-      const users = data.users.map((user) => {
-        return {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          created_at: new Date(user.created_at).toLocaleDateString(),
-        };
-      });
-      return users;
-    },
-    {
-      staleTime: 1000 * 5, // 5 seconds
-    }
-  );
+  const [page, setPage] = useState(1);
+  const { data, isLoading, isFetching, error } = useUsers(page);
 
   const isWideVersion = useBreakpointValue({
     base: false,
@@ -100,7 +83,7 @@ export default function UserList() {
                   <Th w="8"></Th>
                 </Thead>
                 <Tbody>
-                  {data.map((user) => {
+                  {data.users.map((user) => {
                     return (
                       <Tr key={user.id}>
                         <Td px={["4", "4", "6"]}>
@@ -131,7 +114,11 @@ export default function UserList() {
                   })}
                 </Tbody>
               </Table>
-              <Pagination />
+              <Pagination
+                totalCountRegister={data.totalCount}
+                currentPage={page}
+                onPageChange={setPage}
+              />
             </>
           )}
         </Box>
@@ -139,3 +126,5 @@ export default function UserList() {
     </Box>
   );
 }
+
+//todo problema na pagina 1
