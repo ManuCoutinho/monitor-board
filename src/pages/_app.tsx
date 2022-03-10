@@ -6,11 +6,11 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { SideDrawerProvider } from "../context/SidebarDrawerContext";
 
 import { theme } from "../style/theme";
+import { queryClient } from "../services/QueryClient";
 
 if (process.env.NODE_ENV === "development") {
   makeServer();
 }
-const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
